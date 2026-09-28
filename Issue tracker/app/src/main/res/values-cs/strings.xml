@@ -32,11 +32,15 @@
     <string name="save">Uložit</string>
     <string name="appearance">Vzhled</string>
     <string name="dark_mode">Tmavý režim</string>
+    <string name="app_theme">Motiv</string>
+    <string name="theme_material_you">Material You</string>
+    <string name="theme_one_ui">One UI</string>
     <string name="language">Jazyk</string>
     <string name="system">Systém</string>
     <string name="light">Světlý</string>
     <string name="dark">Tmavý</string>
     <string name="notification_permission">Povolení notifikací</string>
+    <string name="test_notification">Otestovat oznámení</string>
     <string name="notification_permission_desc">Pro příjem upozornění na nové issue musíte povolit notifikace v nastavení systému.</string>
     <string name="settings_saved">Nastavení uloženo</string>
     <string name="format_error">Formát: owner/repo (např. StormPatrikCZ/LandawasOS)</string>

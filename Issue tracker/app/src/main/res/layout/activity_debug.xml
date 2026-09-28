@@ -4,21 +4,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface">
+    android:background="?android:colorBackground">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurface"
+        android:background="?android:colorBackground"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:navigationIcon="?attr/navigationIcon"
             app:title="🔧 Debug"
-            app:titleTextColor="?attr/colorOnSurface"/>
+            app:titleTextColor="?attr/colorOnBackground"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -36,98 +36,154 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="📱 Device Info"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="?attr/colorPrimary"/>
+                android:paddingHorizontal="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="16dp"
+                android:text="🔧 Debug"
+                style="?attr/screenHeaderStyle"
+                android:textColor="?attr/colorOnBackground"/>
 
-            <TextView
-                android:id="@+id/debug_locale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurface"/>
-
-            <TextView
-                android:id="@+id/debug_language"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurface"/>
-
-            <TextView
-                android:id="@+id/debug_android_version"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurface"/>
-
-            <com.google.android.material.divider.MaterialDivider
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="16dp"/>
+                style="@style/OneUI.Card">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="⚙️ App Settings"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="?attr/colorPrimary"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-            <TextView
-                android:id="@+id/debug_saved_language"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurface"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📱 Device Info"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        android:textColor="?attr/colorPrimary"/>
 
-            <TextView
-                android:id="@+id/debug_dark_mode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurface"/>
+                    <TextView
+                        android:id="@+id/debug_locale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?attr/colorOnSurface"/>
 
-            <TextView
-                android:id="@+id/debug_repo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurface"/>
+                    <TextView
+                        android:id="@+id/debug_language"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?attr/colorOnSurface"/>
 
-            <com.google.android.material.divider.MaterialDivider
+                    <TextView
+                        android:id="@+id/debug_android_version"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?attr/colorOnSurface"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="16dp"/>
+                android:layout_marginTop="12dp"
+                style="@style/OneUI.Card">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🧪 Actions"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="?attr/colorPrimary"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_clear_prefs"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="⚙️ App Settings"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        android:textColor="?attr/colorPrimary"/>
+
+                    <TextView
+                        android:id="@+id/debug_saved_language"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?attr/colorOnSurface"/>
+
+                    <TextView
+                        android:id="@+id/debug_dark_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?attr/colorOnSurface"/>
+
+                    <TextView
+                        android:id="@+id/debug_theme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?attr/colorOnSurface"/>
+
+                    <TextView
+                        android:id="@+id/debug_repo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?attr/colorOnSurface"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Clear Preferences"
-                style="@style/Widget.Material3.Button.OutlinedButton"/>
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="16dp"
+                style="@style/OneUI.Card">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_test_crash"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Test Crash (throw Exception)"
-                android:textColor="@color/md3_error"
-                style="@style/Widget.Material3.Button.OutlinedButton"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🧪 Actions"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        android:textColor="?attr/colorPrimary"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_clear_prefs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Clear Preferences"
+                        style="?attr/toggleButtonStyle"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_test_crash"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Test Crash (throw Exception)"
+                        android:textColor="?attr/colorError"
+                        style="?attr/toggleButtonStyle"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 

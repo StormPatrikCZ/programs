@@ -13,6 +13,7 @@ import com.example.aitester.data.model.GitHubIssue
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.color.MaterialColors
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -59,11 +60,14 @@ class IssuesAdapter(
                         setTextColor(color)
                     } catch (e: Exception) {
                         chipStrokeColor = android.content.res.ColorStateList.valueOf(
-                            itemView.context.getColor(R.color.md3_outline)
+                            MaterialColors.getColor(
+                                itemView,
+                                com.google.android.material.R.attr.colorOutline
+                            )
                         )
                     }
                     textSize = 10f
-                    chipCornerRadius = 4f
+                    chipCornerRadius = 8f
                 }
                 labelsGroup.addView(chip)
             }

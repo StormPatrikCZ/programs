@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- OneUI bottom navigation: floating dock, fully rounded, card surface -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="?attr/cardBackground"/>
+    <corners android:radius="@dimen/oneui_bottom_nav_radius"/>
+</shape>

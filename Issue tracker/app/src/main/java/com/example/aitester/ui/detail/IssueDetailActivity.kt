@@ -1,5 +1,6 @@
 package com.example.aitester.ui.detail
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Build
@@ -18,7 +19,10 @@ import com.example.aitester.data.model.GitHubIssue
 import com.example.aitester.data.network.GitHubService
 import com.example.aitester.data.preferences.PreferencesManager
 import com.example.aitester.databinding.ActivityIssueDetailBinding
+import com.example.aitester.ui.common.LocaleHelper
+import com.example.aitester.ui.common.ThemeHelper
 import com.google.android.material.chip.Chip
+import com.google.android.material.color.MaterialColors
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -29,7 +33,12 @@ class IssueDetailActivity : AppCompatActivity() {
     private lateinit var gitHubService: GitHubService
     private lateinit var preferencesManager: PreferencesManager
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleHelper.wrap(newBase))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        ThemeHelper.applyTheme(this)
         super.onCreate(savedInstanceState)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -78,13 +87,23 @@ class IssueDetailActivity : AppCompatActivity() {
     private fun displayIssue(issue: GitHubIssue) {
         binding.toolbar.title = "#${issue.number}"
 
-        // State badge
+        // State badge (tint keeps the OneUI pill shape)
         if (issue.state == "open") {
             binding.issueState.text = "○ " + getString(R.string.state_open)
-            binding.issueState.setBackgroundColor(getColor(R.color.md3_secondary))
+            binding.issueState.backgroundTintList = ColorStateList.valueOf(
+                MaterialColors.getColor(
+                    binding.issueState,
+                    com.google.android.material.R.attr.colorSecondary
+                )
+            )
         } else {
             binding.issueState.text = "✓ " + getString(R.string.state_closed)
-            binding.issueState.setBackgroundColor(getColor(R.color.md3_error))
+            binding.issueState.backgroundTintList = ColorStateList.valueOf(
+                MaterialColors.getColor(
+                    binding.issueState,
+                    com.google.android.material.R.attr.colorError
+                )
+            )
         }
 
         binding.issueTitle.text = issue.title
@@ -135,7 +154,12 @@ class IssueDetailActivity : AppCompatActivity() {
                 if (comments.isEmpty()) {
                     binding.commentsError.visibility = View.VISIBLE
                     binding.commentsError.text = getString(R.string.no_comments)
-                    binding.commentsError.setTextColor(getColor(R.color.md3_on_surface_variant))
+                    binding.commentsError.setTextColor(
+                        MaterialColors.getColor(
+                            binding.commentsError,
+                            com.google.android.material.R.attr.colorOnSurfaceVariant
+                        )
+                    )
                 } else {
                     displayComments(comments)
                 }

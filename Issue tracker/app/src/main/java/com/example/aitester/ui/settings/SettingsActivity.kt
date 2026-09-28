@@ -1,11 +1,9 @@
 package com.example.aitester.ui.settings
 
-import android.app.LocaleManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.os.LocaleList
 import android.provider.Settings
 import android.view.View
 import android.widget.ArrayAdapter
@@ -24,9 +22,10 @@ import com.example.aitester.AITesterApp
 import com.example.aitester.R
 import com.example.aitester.data.preferences.PreferencesManager
 import com.example.aitester.databinding.ActivitySettingsBinding
+import com.example.aitester.ui.common.LocaleHelper
+import com.example.aitester.ui.common.ThemeHelper
 import com.example.aitester.worker.IssueCheckWorker
 import kotlinx.coroutines.launch
-import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 class SettingsActivity : AppCompatActivity() {
@@ -50,7 +49,12 @@ class SettingsActivity : AppCompatActivity() {
 
     data class LanguageItem(val code: String, val stringRes: Int)
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleHelper.wrap(newBase))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        ThemeHelper.applyTheme(this)
         super.onCreate(savedInstanceState)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -64,6 +68,7 @@ class SettingsActivity : AppCompatActivity() {
         setupToolbar()
         setupLanguageDropdown()
         setupDarkModeToggle()
+        setupThemeToggle()
         loadCurrentSettings()
         setupNotificationButton()
         setupSaveButton()
@@ -107,6 +112,21 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupThemeToggle() {
+        binding.themeToggle.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked) {
+                val theme = when (checkedId) {
+                    R.id.btn_theme_one_ui -> PreferencesManager.THEME_ONE_UI
+                    else -> PreferencesManager.THEME_MATERIAL_YOU
+                }
+                if (theme != preferencesManager.getThemeSync()) {
+                    preferencesManager.saveTheme(theme)
+                    recreate()
+                }
+            }
+        }
+    }
+
     private fun loadCurrentSettings() {
         lifecycleScope.launch {
             val owner = preferencesManager.getRepoOwner()
@@ -122,6 +142,13 @@ class SettingsActivity : AppCompatActivity() {
             binding.languageDropdown.setText(getString(languageOptions[languageIndex].stringRes), false)
         }
 
+        // Set theme toggle
+        when (preferencesManager.getThemeSync()) {
+            PreferencesManager.THEME_ONE_UI, PreferencesManager.THEME_ONE_UI_DYNAMIC ->
+                binding.themeToggle.check(R.id.btn_theme_one_ui)
+            else -> binding.themeToggle.check(R.id.btn_theme_material_you)
+        }
+
         // Set dark mode toggle
         val darkMode = preferencesManager.getDarkModeSync()
         when (darkMode) {
@@ -134,6 +161,16 @@ class SettingsActivity : AppCompatActivity() {
     private fun setupNotificationButton() {
         binding.notificationSettingsButton.setOnClickListener {
             openNotificationSettings()
+        }
+        binding.testNotificationButton.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                androidx.core.content.ContextCompat.checkSelfPermission(
+                    this, android.Manifest.permission.POST_NOTIFICATIONS) !=
+                android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                openNotificationSettings()
+            } else {
+                com.example.aitester.worker.IssueCheckWorker.showTestNotification(this)
+            }
         }
     }
 
@@ -210,29 +247,11 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun applyLanguage(language: String) {
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                val localeManager = getSystemService(LocaleManager::class.java)
-                val localeList = when (language) {
-                    "en" -> LocaleList(Locale.forLanguageTag("en"))
-                    "cs" -> LocaleList(Locale.forLanguageTag("cs"))
-                    "sk" -> LocaleList(Locale.forLanguageTag("sk"))
-                    "de" -> LocaleList(Locale.forLanguageTag("de"))
-                    "de_AT" -> LocaleList(Locale.forLanguageTag("de-AT"))
-                    "pl" -> LocaleList(Locale.forLanguageTag("pl"))
-                    "it" -> LocaleList(Locale.forLanguageTag("it"))
-                    "ru" -> LocaleList(Locale.forLanguageTag("ru"))
-                    "uk" -> LocaleList(Locale.forLanguageTag("uk"))
-                    else -> LocaleList.getEmptyLocaleList()
-                }
-                localeManager.applicationLocales = localeList
-            } else {
-                restartApp()
-            }
-        } catch (e: Exception) {
-            // Fallback - restart app
-            restartApp()
-        }
+        // Single source of truth: AppCompat per-app locales (backported to API 24+,
+        // on API 33+ delegated to the system LocaleManager). The subsequent
+        // restart into MainActivity makes the change visible immediately.
+        LocaleHelper.applyAppLanguage(language)
+        restartApp()
     }
 
     private fun restartApp() {

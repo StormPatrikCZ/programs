@@ -1,12 +1,19 @@
 package com.example.aitester
 
+import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -20,6 +27,8 @@ import com.example.aitester.data.model.GitHubIssue
 import com.example.aitester.data.network.GitHubService
 import com.example.aitester.data.preferences.PreferencesManager
 import com.example.aitester.databinding.ActivityMainBinding
+import com.example.aitester.ui.common.LocaleHelper
+import com.example.aitester.ui.common.ThemeHelper
 import com.example.aitester.ui.adapter.IssuesAdapter
 import com.example.aitester.ui.detail.IssueDetailActivity
 import com.example.aitester.ui.settings.SettingsActivity
@@ -36,11 +45,22 @@ class MainActivity : AppCompatActivity() {
 
     private var allIssues: List<GitHubIssue> = emptyList()
     private var currentFilter: String = "open" // "open", "closed"
+    private var appliedTheme: String = ThemeHelper.THEME_MATERIAL_YOU
+
+    private val notificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { }
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleHelper.wrap(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        ThemeHelper.applyTheme(this)
         super.onCreate(savedInstanceState)
 
         preferencesManager = PreferencesManager(this)
+        appliedTheme = preferencesManager.getThemeSync()
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
@@ -53,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
         setupRetryButton()
         scheduleIssueCheck()
+        requestNotificationPermission()
 
         // Initialize GitHubService with stored repo
         lifecycleScope.launch {
@@ -63,6 +84,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        // Recreate if the app theme changed in Settings
+        if (preferencesManager.getThemeSync() != appliedTheme) {
+            recreate()
+            return
+        }
         // Reload repo settings in case they changed
         lifecycleScope.launch {
             val (owner, repo) = preferencesManager.getFullRepo()
@@ -76,9 +102,8 @@ class MainActivity : AppCompatActivity() {
                 WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
             )
 
-            binding.toolbar.updatePadding(top = insets.top, left = insets.left, right = insets.right)
+            binding.appbar.updatePadding(top = insets.top, left = insets.left, right = insets.right)
             binding.contentContainer.updatePadding(bottom = insets.bottom)
-            binding.issuesRecycler.updatePadding(top = insets.top)
             binding.bottomNavigation.updatePadding(bottom = insets.bottom)
 
             windowInsets
@@ -86,8 +111,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
-        val toolbar = binding.toolbar
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        // Main screen is top-level: never show an Up button here
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.setDisplayShowHomeEnabled(false)
+        binding.toolbar.navigationIcon = null
+        binding.collapsingToolbar.title = getString(R.string.app_name)
+        // OneUI centers the viewing title, Material You aligns it to the start
+        if (appliedTheme == ThemeHelper.THEME_ONE_UI) {
+            binding.collapsingToolbar.expandedTitleGravity =
+                Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM
+            binding.collapsingToolbar.collapsedTitleGravity = Gravity.CENTER
+        } else {
+            binding.collapsingToolbar.expandedTitleGravity =
+                Gravity.START or Gravity.BOTTOM
+            binding.collapsingToolbar.collapsedTitleGravity = Gravity.START
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -109,6 +149,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun requestNotificationPermission() {
+        // Android 13+: notifications are off until the user grants runtime permission.
+        // Without this, IssueCheckWorker posts silently into the void.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) !=
+            PackageManager.PERMISSION_GRANTED) {
+            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+
     private fun scheduleIssueCheck() {
         val workRequest = PeriodicWorkRequestBuilder<IssueCheckWorker>(
             15, TimeUnit.MINUTES
@@ -127,13 +177,13 @@ class MainActivity : AppCompatActivity() {
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
-                    binding.toolbar.title = getString(R.string.app_name)
+                    binding.collapsingToolbar.title = getString(R.string.app_name)
                     binding.homeContent.visibility = View.VISIBLE
                     binding.newsContent.visibility = View.GONE
                     true
                 }
                 R.id.nav_open -> {
-                    binding.toolbar.title = getString(R.string.open_issues_filter)
+                    binding.collapsingToolbar.title = getString(R.string.open_issues_filter)
                     binding.homeContent.visibility = View.GONE
                     binding.newsContent.visibility = View.VISIBLE
                     currentFilter = "open"
@@ -145,7 +195,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_closed -> {
-                    binding.toolbar.title = getString(R.string.closed_title)
+                    binding.collapsingToolbar.title = getString(R.string.closed_title)
                     binding.homeContent.visibility = View.GONE
                     binding.newsContent.visibility = View.VISIBLE
                     currentFilter = "closed"

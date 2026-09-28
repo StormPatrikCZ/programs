@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="cardBackground" format="color" />
+    <attr name="cardRadius" format="dimension" />
+    <attr name="subCardRadius" format="dimension" />
+    <attr name="primaryButtonStyle" format="reference" />
+    <attr name="toggleButtonStyle" format="reference" />
+    <attr name="screenHeaderStyle" format="reference" />
+    <attr name="sectionLabelStyle" format="reference" />
+    <attr name="collapsingExpandedStyle" format="reference" />
+    <attr name="collapsingCollapsedStyle" format="reference" />
+    <attr name="bottomNavBackground" format="reference" />
+    <attr name="bottomNavFloatMargin" format="dimension" />
+    <attr name="bottomNavElevation" format="dimension" />
+    <attr name="navigationIcon" format="reference" />
+    <attr name="bottomNavIndicatorStyle" format="reference" />
+    <attr name="bottomNavItemBackground" format="reference" />
+</resources>

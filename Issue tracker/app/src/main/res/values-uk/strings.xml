@@ -42,6 +42,7 @@
     <string name="format_error">Формат: owner/repo (напр. StormPatrikCZ/LandawasOS)</string>
     <string name="restart_required">Для застосування мови потрібен перезапуск</string>
     <string name="open_notification_settings">Відкрити налаштування сповіщень</string>
+    <string name="test_notification">Тестове сповіщення</string>
 
     <!-- Languages with flags -->
     <string name="lang_system">🌐 Система</string>

@@ -11,6 +11,11 @@ class PreferencesManager(private val context: Context) {
     companion object {
         private const val PREFS_NAME = "app_prefs"
         private const val KEY_DARK_MODE = "dark_mode"
+        private const val KEY_THEME = "app_theme"
+
+        const val THEME_MATERIAL_YOU = "material_you"
+        const val THEME_ONE_UI = "one_ui"
+        const val THEME_ONE_UI_DYNAMIC = "one_ui_dynamic"
         private const val KEY_LANGUAGE = "language"
         private const val KEY_REPO_OWNER = "repo_owner"
         private const val KEY_REPO_NAME = "repo_name"
@@ -33,9 +38,19 @@ class PreferencesManager(private val context: Context) {
         prefs.edit().putString(KEY_DARK_MODE, mode).apply()
     }
 
+    // App theme (material_you, one_ui)
+    fun getThemeSync(): String {
+        return prefs.getString(KEY_THEME, THEME_MATERIAL_YOU) ?: THEME_MATERIAL_YOU
+    }
+
+    fun saveTheme(theme: String) {
+        // Use commit() for synchronous save so theme is available on recreate()
+        prefs.edit().putString(KEY_THEME, theme).commit()
+    }
+
     // Language (system, en, cs, sk, de, de_AT, pl, it, ru, uk)
     fun getLanguageSync(): String {
-        return prefs.getString(KEY_LANGUAGE, AITesterApp.LANG_EN) ?: AITesterApp.LANG_EN
+        return prefs.getString(KEY_LANGUAGE, AITesterApp.LANG_SYSTEM) ?: AITesterApp.LANG_SYSTEM
     }
 
     fun saveLanguage(language: String) {

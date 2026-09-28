@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Pill badge (tinted at runtime to open/closed color) -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="@color/md3_primary"/>
-    <corners android:radius="4dp"/>
+    <solid android:color="@color/oneui_success"/>
+    <corners android:radius="12dp"/>
 </shape>

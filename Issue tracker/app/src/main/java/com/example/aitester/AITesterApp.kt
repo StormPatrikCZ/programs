@@ -3,10 +3,8 @@ package com.example.aitester
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.Configuration
-import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
-import java.util.Locale
+import com.example.aitester.ui.common.LocaleHelper
 
 class AITesterApp : Application() {
 
@@ -37,13 +35,15 @@ class AITesterApp : Application() {
         super.onCreate()
         prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         applyDarkMode()
+        // Apply saved per-app language (AppCompat backport works on API 24+,
+        // on API 33+ it delegates to the system LocaleManager).
+        LocaleHelper.applyAppLanguage(
+            prefs.getString(KEY_LANGUAGE, LANG_SYSTEM) ?: LANG_SYSTEM
+        )
     }
 
     override fun attachBaseContext(base: Context) {
-        prefs = base.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val lang = prefs.getString(KEY_LANGUAGE, LANG_EN) ?: LANG_EN
-        val context = applyLanguageToContext(base, lang)
-        super.attachBaseContext(context)
+        super.attachBaseContext(LocaleHelper.wrap(base))
     }
 
     private fun applyDarkMode() {
@@ -56,27 +56,4 @@ class AITesterApp : Application() {
         AppCompatDelegate.setDefaultNightMode(nightMode)
     }
 
-    private fun applyLanguageToContext(context: Context, language: String): Context {
-        @Suppress("DEPRECATION")
-        val locale = when (language) {
-            LANG_EN -> Locale("en")
-            LANG_CS -> Locale("cs")
-            LANG_SK -> Locale("sk")
-            LANG_DE -> Locale("de")
-            LANG_DE_AT -> Locale("de", "AT")
-            LANG_PL -> Locale("pl")
-            LANG_IT -> Locale("it")
-            LANG_RU -> Locale("ru")
-            LANG_UK -> Locale("uk")
-            else -> Locale("en")
-        }
-
-        Locale.setDefault(locale)
-
-        val config = Configuration(context.resources.configuration)
-        config.setLocale(locale)
-        config.setLayoutDirection(locale)
-
-        return context.createConfigurationContext(config)
-    }
 }

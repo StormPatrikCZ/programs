@@ -4,21 +4,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface">
+    android:background="?android:colorBackground">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurface"
+        android:background="?android:colorBackground"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:navigationIcon="?attr/navigationIcon"
             app:title="@string/settings"
-            app:titleTextColor="?attr/colorOnSurface"/>
+            app:titleTextColor="?attr/colorOnBackground"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -34,135 +34,249 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- Big OneUI screen header -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="16dp"
+                android:text="@string/settings"
+                style="?attr/screenHeaderStyle"
+                android:textColor="?attr/colorOnBackground"/>
+
             <!-- Language Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
+                android:paddingBottom="8dp"
                 android:text="@string/language"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="?attr/colorOnSurface"/>
+                style="?attr/sectionLabelStyle"
+                android:textColor="?attr/colorOnSurfaceVariant"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/language_input_layout"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                style="@style/OneUI.Card">
 
-                <AutoCompleteTextView
-                    android:id="@+id/language_dropdown"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/language_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"/>
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <AutoCompleteTextView
+                        android:id="@+id/language_dropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"/>
 
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Appearance Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:paddingHorizontal="8dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="8dp"
                 android:text="@string/appearance"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="?attr/colorOnSurface"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/dark_mode"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
+                style="?attr/sectionLabelStyle"
                 android:textColor="?attr/colorOnSurfaceVariant"/>
 
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/dark_mode_toggle"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:singleSelection="true"
-                app:selectionRequired="true">
+                style="@style/OneUI.Card">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_dark_mode_system"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/system"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_dark_mode_light"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/light"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_dark_mode_dark"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/dark"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="@string/github_repository"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="?attr/colorOnSurface"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/repo_input_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="owner/repo"
-                app:helperText="Např. StormPatrikCZ/LandawasOS"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/repo_input"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:maxLines="1"/>
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dark_mode"
+                        android:textAppearance="?attr/textAppearanceBodyLarge"
+                        android:textColor="?attr/colorOnSurface"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/save_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/save"/>
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/dark_mode_toggle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        app:singleSelection="true"
+                        app:selectionRequired="true">
 
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_dark_mode_system"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/system"
+                            style="?attr/toggleButtonStyle"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_dark_mode_light"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/light"
+                            style="?attr/toggleButtonStyle"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_dark_mode_dark"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/dark"
+                            style="?attr/toggleButtonStyle"/>
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/app_theme"
+                        android:textAppearance="?attr/textAppearanceBodyLarge"
+                        android:textColor="?attr/colorOnSurface"/>
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/theme_toggle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        app:singleSelection="true"
+                        app:selectionRequired="true">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_theme_material_you"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/theme_material_you"
+                            style="?attr/toggleButtonStyle"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_theme_one_ui"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/theme_one_ui"
+                            style="?attr/toggleButtonStyle"/>
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Repository Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="@string/notification_permission"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="?attr/colorOnSurface"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/notification_permission_desc"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:paddingHorizontal="8dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="8dp"
+                android:text="@string/github_repository"
+                style="?attr/sectionLabelStyle"
                 android:textColor="?attr/colorOnSurfaceVariant"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/notification_settings_button"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/open_notification_settings"
-                style="@style/Widget.Material3.Button.OutlinedButton"/>
+                style="@style/OneUI.Card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/repo_input_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="owner/repo"
+                        app:helperText="Např. StormPatrikCZ/LandawasOS"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/repo_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:maxLines="1"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/save_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/save"
+                        style="?attr/primaryButtonStyle"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Notifications Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="8dp"
+                android:text="@string/notification_permission"
+                style="?attr/sectionLabelStyle"
+                android:textColor="?attr/colorOnSurfaceVariant"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                style="@style/OneUI.Card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/notification_permission_desc"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?attr/colorOnSurfaceVariant"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/notification_settings_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/open_notification_settings"
+                        style="?attr/toggleButtonStyle"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/test_notification_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/test_notification"
+                        style="?attr/primaryButtonStyle"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 

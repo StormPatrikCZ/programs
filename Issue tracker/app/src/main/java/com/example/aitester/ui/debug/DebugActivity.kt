@@ -1,5 +1,6 @@
 package com.example.aitester.ui.debug
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -12,6 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import com.example.aitester.R
 import com.example.aitester.data.preferences.PreferencesManager
 import com.example.aitester.databinding.ActivityDebugBinding
+import com.example.aitester.ui.common.LocaleHelper
+import com.example.aitester.ui.common.ThemeHelper
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -20,7 +23,12 @@ class DebugActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDebugBinding
     private lateinit var preferencesManager: PreferencesManager
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleHelper.wrap(newBase))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        ThemeHelper.applyTheme(this)
         super.onCreate(savedInstanceState)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -59,6 +67,7 @@ class DebugActivity : AppCompatActivity() {
         val savedLang = preferencesManager.getLanguageSync()
         binding.debugSavedLanguage.text = "Saved Language: $savedLang"
         binding.debugDarkMode.text = "Dark Mode: ${preferencesManager.getDarkModeSync()}"
+        binding.debugTheme.text = "Theme: ${preferencesManager.getThemeSync()}"
 
         lifecycleScope.launch {
             val (owner, repo) = preferencesManager.getFullRepo()

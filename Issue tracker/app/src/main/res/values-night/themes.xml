@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Material Design 3 Dark Theme - same colors as light when Material You is not available -->
+    <!-- Material You dark theme (default) -->
     <style name="Theme.AITESTER" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary -->
         <item name="colorPrimary">@color/md3_primary</item>
@@ -41,9 +41,141 @@
         <item name="colorOutline">@color/md3_outline</item>
         <item name="colorOutlineVariant">@color/md3_outline_variant</item>
 
+        <!-- App card background -->
+        <item name="cardBackground">@color/m3_card</item>
+
+        <!-- Material You shapes & component styles -->
+        <item name="cardRadius">@dimen/m3_card_radius</item>
+        <item name="subCardRadius">@dimen/m3_sub_card_radius</item>
+        <item name="primaryButtonStyle">@style/Widget.Material3.Button</item>
+        <item name="toggleButtonStyle">@style/Widget.Material3.Button.OutlinedButton</item>
+        <item name="screenHeaderStyle">@style/TextAppearance.Material3.HeadlineSmall</item>
+        <item name="sectionLabelStyle">@style/TextAppearance.Material3.TitleSmall</item>
+        <item name="collapsingExpandedStyle">@style/TextAppearance.Material3.HeadlineMedium</item>
+        <item name="collapsingCollapsedStyle">@style/TextAppearance.Material3.TitleLarge</item>
+        <item name="bottomNavBackground">@color/m3_card</item>
+        <item name="bottomNavFloatMargin">0dp</item>
+        <item name="bottomNavElevation">4dp</item>
+        <item name="navigationIcon">?attr/homeAsUpIndicator</item>
+        <item name="bottomNavIndicatorStyle">@style/Widget.Material3.BottomNavigationView.ActiveIndicator</item>
+        <item name="bottomNavItemBackground">@null</item>
+
         <!-- Status Bar -->
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+    <!-- OneUI-style custom dark theme: true black background -->
+    <style name="Theme.AITESTER.OneUI" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary -->
+        <item name="colorPrimary">@color/oneui_primary</item>
+        <item name="colorOnPrimary">@color/oneui_on_primary</item>
+        <item name="colorPrimaryContainer">@color/oneui_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/oneui_on_primary_container</item>
+
+        <!-- Secondary -->
+        <item name="colorSecondary">@color/oneui_secondary</item>
+        <item name="colorOnSecondary">@color/oneui_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/oneui_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/oneui_on_secondary_container</item>
+
+        <!-- Tertiary -->
+        <item name="colorTertiary">@color/oneui_tertiary</item>
+        <item name="colorOnTertiary">@color/oneui_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/oneui_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/oneui_on_tertiary_container</item>
+
+        <!-- Error -->
+        <item name="colorError">@color/oneui_error</item>
+        <item name="colorOnError">@color/oneui_on_error</item>
+        <item name="colorErrorContainer">@color/oneui_error_container</item>
+        <item name="colorOnErrorContainer">@color/oneui_on_error_container</item>
+
+        <!-- OneUI grouped background (true black) -->
+        <item name="android:colorBackground">@color/oneui_background</item>
+        <item name="colorOnBackground">@color/oneui_on_background</item>
+
+        <!-- Surface = OneUI cards -->
+        <item name="colorSurface">@color/oneui_surface</item>
+        <item name="colorOnSurface">@color/oneui_on_surface</item>
+        <item name="colorSurfaceVariant">@color/oneui_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/oneui_on_surface_variant</item>
+
+        <!-- Outline -->
+        <item name="colorOutline">@color/oneui_outline</item>
+        <item name="colorOutlineVariant">@color/oneui_outline_variant</item>
+
+        <!-- App card background -->
+        <item name="cardBackground">@color/oneui_card</item>
+
+        <!-- OneUI shapes & component styles -->
+        <item name="cardRadius">@dimen/oneui_card_radius</item>
+        <item name="subCardRadius">@dimen/oneui_sub_card_radius</item>
+        <item name="primaryButtonStyle">@style/OneUI.Button</item>
+        <item name="toggleButtonStyle">@style/OneUI.Button.Outlined</item>
+        <item name="screenHeaderStyle">@style/OneUI.Header</item>
+        <item name="sectionLabelStyle">@style/OneUI.SectionLabel</item>
+        <item name="collapsingExpandedStyle">@style/OneUI.CollapsingExpanded</item>
+        <item name="collapsingCollapsedStyle">@style/OneUI.CollapsingCollapsed</item>
+        <item name="bottomNavBackground">@drawable/oneui_bottom_nav_background</item>
+        <item name="bottomNavFloatMargin">12dp</item>
+        <item name="bottomNavElevation">8dp</item>
+        <item name="navigationIcon">@drawable/ic_back_oneui</item>
+        <item name="bottomNavIndicatorStyle">@style/OneUI.NoActiveIndicator</item>
+        <item name="bottomNavItemBackground">@drawable/bottom_nav_item_glass</item>
+
+        <!-- Status Bar -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+    <!-- OneUI collapsing header text appearances -->
+    <style name="OneUI.CollapsingExpanded" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:textSize">34sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="OneUI.CollapsingCollapsed" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- OneUI big screen header (static pages) -->
+    <style name="OneUI.Header" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- OneUI section label above grouped cards -->
+    <style name="OneUI.SectionLabel" parent="TextAppearance.Material3.TitleSmall">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- App grouped card (color switches with theme) -->
+    <style name="OneUI.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardCornerRadius">?attr/cardRadius</item>
+        <item name="cardElevation">1dp</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="cardBackgroundColor">?attr/cardBackground</item>
+    </style>
+
+    <!-- OneUI: no icon-only active indicator (glass spans the whole tab) -->
+    <style name="OneUI.NoActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@android:color/transparent</item>
+    </style>
+
+    <!-- OneUI buttons: 18dp radius per Samsung design docs -->
+    <style name="OneUI.Button" parent="Widget.Material3.Button">
+        <item name="cornerRadius">18dp</item>
+    </style>
+
+    <style name="OneUI.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="cornerRadius">18dp</item>
     </style>
 
 </resources>

@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_home"
-        android:icon="@android:drawable/ic_menu_today"
+        android:icon="@drawable/ic_nav_home"
         android:title="@string/home_title"/>
     <item
         android:id="@+id/nav_open"
-        android:icon="@android:drawable/ic_menu_agenda"
+        android:icon="@drawable/ic_nav_open"
         android:title="@string/open_issues_filter"/>
     <item
         android:id="@+id/nav_closed"
-        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:icon="@drawable/ic_nav_closed"
         android:title="@string/closed_issues_filter"/>
 </menu>

@@ -26,6 +26,47 @@ class IssueCheckWorker(
         const val CHANNEL_ID = "issues_channel"
         const val NOTIFICATION_ID = 1001
         const val WORK_NAME = "issue_check_work"
+
+        fun createChannel(context: Context) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val importance = android.app.NotificationManager.IMPORTANCE_DEFAULT
+                val channel = NotificationChannel(
+                    CHANNEL_ID,
+                    context.getString(R.string.notification_channel_name),
+                    importance
+                ).apply {
+                    description = context.getString(R.string.notification_channel_desc)
+                }
+                val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                notificationManager.createNotificationChannel(channel)
+            }
+        }
+
+        fun showTestNotification(context: Context) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                    return
+                }
+            }
+            createChannel(context)
+            val intent = Intent(context, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            val pendingIntent = PendingIntent.getActivity(
+                context, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(context.getString(R.string.new_issue))
+                .setContentText(context.getString(R.string.new_issue_notification))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .build()
+            NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)
+        }
     }
 
     private val preferencesManager = PreferencesManager(applicationContext)
@@ -79,18 +120,7 @@ class IssueCheckWorker(
     }
 
     private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val importance = android.app.NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(
-                CHANNEL_ID,
-                applicationContext.getString(R.string.notification_channel_name),
-                importance
-            ).apply {
-                description = applicationContext.getString(R.string.notification_channel_desc)
-            }
-            val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
+        createChannel(applicationContext)
     }
 
     private fun showNotification(issueId: Long) {

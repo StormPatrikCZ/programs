@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Same hue as light theme but darker surfaces for dark mode -->
-    <color name="md3_primary">#1976D2</color>
-    <color name="md3_on_primary">#FFFFFF</color>
+    <!-- Material You (M3) dark palette -->
+    <color name="md3_primary">#9ECAFF</color>
+    <color name="md3_on_primary">#003258</color>
     <color name="md3_primary_container">#004A77</color>
     <color name="md3_on_primary_container">#D1E4FF</color>
 
-    <color name="md3_secondary">#535F70</color>
-    <color name="md3_on_secondary">#FFFFFF</color>
+    <color name="md3_secondary">#BBC7DB</color>
+    <color name="md3_on_secondary">#253140</color>
     <color name="md3_secondary_container">#3B4458</color>
     <color name="md3_on_secondary_container">#D7E3F7</color>
 
-    <color name="md3_tertiary">#6B5778</color>
-    <color name="md3_on_tertiary">#FFFFFF</color>
+    <color name="md3_tertiary">#D6BDE3</color>
+    <color name="md3_on_tertiary">#3B2948</color>
     <color name="md3_tertiary_container">#533D5C</color>
     <color name="md3_on_tertiary_container">#F2DAFF</color>
 
-    <color name="md3_error">#BA1A1A</color>
-    <color name="md3_on_error">#FFFFFF</color>
+    <color name="md3_error">#FFB4AB</color>
+    <color name="md3_on_error">#690005</color>
     <color name="md3_error_container">#8C1D18</color>
     <color name="md3_on_error_container">#FFDAD6</color>
 
@@ -35,4 +35,53 @@
     <color name="md3_inverse_surface">#E3E2E6</color>
     <color name="md3_inverse_on_surface">#2F3033</color>
     <color name="md3_inverse_primary">#1976D2</color>
+
+    <!-- M3 surface-container for cards in Material You theme -->
+    <color name="m3_card">#211F26</color>
+
+    <!-- OneUI-inspired dark palette: true black background -->
+    <color name="oneui_primary">#3D9BFF</color>
+    <color name="oneui_on_primary">#FFFFFF</color>
+    <color name="oneui_primary_container">#004A77</color>
+    <color name="oneui_on_primary_container">#D1E4FF</color>
+
+    <color name="oneui_secondary">#8E8E93</color>
+    <color name="oneui_on_secondary">#FFFFFF</color>
+    <color name="oneui_secondary_container">#3B4458</color>
+    <color name="oneui_on_secondary_container">#D7E3F7</color>
+
+    <color name="oneui_tertiary">#6B5778</color>
+    <color name="oneui_on_tertiary">#FFFFFF</color>
+    <color name="oneui_tertiary_container">#533D5C</color>
+    <color name="oneui_on_tertiary_container">#F2DAFF</color>
+
+    <color name="oneui_error">#FF453A</color>
+    <color name="oneui_on_error">#FFFFFF</color>
+    <color name="oneui_error_container">#8C1D18</color>
+    <color name="oneui_on_error_container">#FFDAD6</color>
+
+    <color name="oneui_background">#000000</color>
+    <color name="oneui_on_background">#E3E2E6</color>
+
+    <color name="oneui_surface">#1C1C1E</color>
+    <color name="oneui_on_surface">#E3E2E6</color>
+    <color name="oneui_surface_variant">#2C2C2E</color>
+    <color name="oneui_on_surface_variant">#AEAEB2</color>
+
+    <color name="oneui_outline">#636366</color>
+    <color name="oneui_outline_variant">#2C2C2E</color>
+
+    <color name="oneui_inverse_surface">#E3E2E6</color>
+    <color name="oneui_inverse_on_surface">#2F3033</color>
+    <color name="oneui_inverse_primary">#0381FE</color>
+
+    <!-- Liquid-glass highlight (OneUI bottom nav selection) -->
+    <color name="glass_fill">#47FFFFFF</color>
+    <color name="glass_stroke">#6BFFFFFF</color>
+
+    <!-- OneUI extras -->
+    <color name="oneui_success">#30D158</color>
+    <color name="oneui_separator">#2C2C2E</color>
+    <color name="oneui_card">#1C1C1E</color>
+    <color name="oneui_grouped_bg">#000000</color>
 </resources>
